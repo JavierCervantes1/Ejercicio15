@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -36,6 +39,7 @@ public class Ejercicio15 extends javax.swing.JFrame {
         txtOrdi = new javax.swing.JTextField();
         txtEspe = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
+        cmdBorrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,10 +70,29 @@ public class Ejercicio15 extends javax.swing.JFrame {
                 txtPresActionPerformed(evt);
             }
         });
+        txtPres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPresKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtPres, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 130, -1));
+
+        txtOrdi.setEditable(false);
         jPanel1.add(txtOrdi, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 130, -1));
+
+        txtEspe.setEditable(false);
         jPanel1.add(txtEspe, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, 130, -1));
+
+        txtTotal.setEditable(false);
         jPanel1.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 130, -1));
+
+        cmdBorrar.setText("Borrar");
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 90, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,35 +112,59 @@ public class Ejercicio15 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+
+        // TODO add your handling code here:
+        String res, res1, res2;
+        double prestamo, inte, valor, cuotas, espe, ordi;
+
+        if (txtPres.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite por favor el monto del prestamo", "Error", JOptionPane.ERROR_MESSAGE);
+            txtPres.requestFocusInWindow();
+        } else {
+
+            prestamo = Double.parseDouble(txtPres.getText());
+
+            inte   = prestamo * 0.24;
+            valor  = prestamo + inte;
+            cuotas = valor / 2;
+            espe   = cuotas / 4;
+            ordi   = cuotas / 20;
+
+            res  = String.valueOf(valor);
+            res1 = String.valueOf(espe);
+            res2 = String.valueOf(ordi);
+
+            txtTotal.setText(res);
+            txtEspe.setText(res1);
+            txtOrdi.setText(res2);
+        }
+
+    }//GEN-LAST:event_cmdCalcularActionPerformed
+
     private void txtPresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPresActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPresActionPerformed
 
-    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+    private void txtPresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPresKeyTyped
         // TODO add your handling code here:
-        String res, res1, res2;
-        double prestamo, inte, valor, cuotas, espe, ordi;
-        
-        prestamo = Double.parseDouble(txtPres.getText());
-        
-        
-        inte   = prestamo * 0.24;
-        valor  = prestamo + inte;
-        cuotas = valor / 2;
-        espe   = cuotas / 4;
-        ordi   = cuotas / 20;
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
 
-        res  = String.valueOf(valor);
-        res1 = String.valueOf(espe);
-        res2 = String.valueOf(ordi);
-        
-        txtTotal.setText(res);
-        txtEspe.setText(res1);
-        txtOrdi.setText(res2);
-        
-        
-                
-    }//GEN-LAST:event_cmdCalcularActionPerformed
+    }//GEN-LAST:event_txtPresKeyTyped
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+        // TODO add your handling code here:
+        txtPres.setText("");
+        txtEspe.setText("");
+        txtOrdi.setText("");
+        txtTotal.setText("");
+        txtPres.requestFocusInWindow();
+
+    }//GEN-LAST:event_cmdBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,6 +202,7 @@ public class Ejercicio15 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cmdBorrar;
     private javax.swing.JButton cmdCalcular;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
